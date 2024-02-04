@@ -1,5 +1,5 @@
-f a = if a == 1 then "1" else "?"
+fact 0 = 1
+fact n = n * fact (n - 1)
 
 main = do
-  print $ f 1
-  print $ f 4
+  print $ fact 5
