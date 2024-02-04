@@ -1,4 +1,5 @@
-a = 3
+f a = if a == 1 then "1" else "?"
 
 main = do
-  if a == 1 then print "1" else print "?"
+  print $ f 1
+  print $ f 4
