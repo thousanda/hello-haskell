@@ -1,7 +1,4 @@
-add x y = x + y
+a = 3
 
 main = do
-  print $ 5 + 2
-  print $ div 5 2
-  print $ mod 11 4
-
+  if a == 1 then print "1" else print "?"
