@@ -1,24 +1,39 @@
-sum' [] = 0
-sum' (x:xs) = x + (sum' xs)
+import Data.Char    
 
-product' [] = 1
-product' (x:xs) = x * (product' xs)
+shift = 13
 
-take' _ [] = []
-take' n _ | n < 1 = []
-take' n (x:xs) = x : take' (n-1) xs
+rotLower c
+  | ord c + shift <= ord 'z' = chr (ord c + shift)
+  | otherwise = chr (ord 'a' - 1 + (shift - (ord 'z' - ord c)))
 
-drop' _ [] = []
-drop' n xs | n < 1 = xs
-drop' n (_:xs) = drop' (n-1) xs
+rotUpper c
+  | ord c + shift <= ord 'Z' = chr (ord c + shift)
+  | otherwise = chr (ord 'A' - 1 + (shift - (ord 'Z' - ord c)))
 
-reverse' [] = []
-reverse' (x:xs) = reverse' xs ++ [x]
+rot c
+  | 'a' <= c && c <= 'z' = rotLower c
+  | 'A' <= c && c <= 'Z' = rotUpper c
+  | otherwise = c    
 
 main :: IO ()
 main = do
-  print $ sum' [1..10]
-  print $ product' [1..5]
-  print $ take' 3 [1..10]
-  print $ drop' 3 [1..10]
-  print $ reverse' [1..10]
+  print $ ord 'a'
+  print $ ord 'b'
+  print $ ord 'z'
+  print $ ord 'A'
+  print $ ord 'B'
+  print $ ord 'Z'
+
+  print $ rot 'a'
+  print $ rot 'b'
+  print $ rot 'z'
+  print $ rot (rot 'a')
+  print $ rot (rot 'b')
+  print $ rot (rot 'z')
+  print $ rot 'A'
+  print $ rot 'B'
+  print $ rot 'Z'
+  print $ rot (rot 'A')
+  print $ rot (rot 'B')
+  print $ rot (rot 'Z')
+
