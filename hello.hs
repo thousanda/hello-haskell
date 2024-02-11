@@ -1,39 +1,50 @@
-import Data.Char    
+-- insertion sort
+insert x [] = [x]
+insert x (y:ys)
+  | x < y = x:y:ys
+  | otherwise = y : insert x ys
 
-shift = 13
+isort [] = []
+isort (x:xs) = insert x (isort xs)
 
-rotLower c
-  | ord c + shift <= ord 'z' = chr (ord c + shift)
-  | otherwise = chr (ord 'a' - 1 + (shift - (ord 'z' - ord c)))
+-- bubble sort
+swap [x] = [x]
+swap (x:xs)
+  | x < y = x:y:ys
+  | otherwise = y:x:ys
+  where
+    (y:ys) = swap xs
 
-rotUpper c
-  | ord c + shift <= ord 'Z' = chr (ord c + shift)
-  | otherwise = chr (ord 'A' - 1 + (shift - (ord 'Z' - ord c)))
+bsort [] = []
+bsort xs = y : bsort ys
+  where
+    (y:ys) = swap xs
 
-rot c
-  | 'a' <= c && c <= 'z' = rotLower c
-  | 'A' <= c && c <= 'Z' = rotUpper c
-  | otherwise = c    
+-- merge sort
+merge xs [] = xs
+merge [] ys = ys
+merge (x:xs) (y:ys)
+  | x < y = x : merge xs (y:ys)
+  | otherwise = y : merge (x:xs) ys
+
+msort [] = []
+msort [x] = [x]
+msort xs = merge (msort (take h xs)) (msort (drop h xs))
+  where
+    h = (length xs) `div` 2
+
+-- quick sort
+qsort [] = []
+qsort [x] = [x]
+qsort (n:xs) = qsort lt ++ [n] ++ qsort gteq
+  where
+    lt = [x | x <- xs, x < n]
+    gteq = [x | x <- xs, x >= n]
 
 main :: IO ()
 main = do
-  print $ ord 'a'
-  print $ ord 'b'
-  print $ ord 'z'
-  print $ ord 'A'
-  print $ ord 'B'
-  print $ ord 'Z'
-
-  print $ rot 'a'
-  print $ rot 'b'
-  print $ rot 'z'
-  print $ rot (rot 'a')
-  print $ rot (rot 'b')
-  print $ rot (rot 'z')
-  print $ rot 'A'
-  print $ rot 'B'
-  print $ rot 'Z'
-  print $ rot (rot 'A')
-  print $ rot (rot 'B')
-  print $ rot (rot 'Z')
-
+  print $ isort [3, 6, 1, 2, 7, 4]
+  print $ swap [3, 6, 1, 2, 7, 4]
+  print $ bsort [3, 6, 1, 2, 7, 4]
+  print $ msort [3, 6, 1, 2, 7, 4]
+  print $ qsort [3, 6, 1, 2, 7, 4]
